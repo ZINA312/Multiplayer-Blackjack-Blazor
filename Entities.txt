@@ -1,0 +1,39 @@
+-Player
+    Properties:
+        int SetScore
+        List<Card> Cards
+    Methods:
+
+enum CardValue
+enum CardSuit
+-Card
+    Properties:
+        CardValue Value
+        CardSuit Suit
+        string Rank
+        string ImgPath
+        bool IsVisible
+    Methods:
+
+-Deck
+    Properties:
+        List<Card> Cards
+        int NumOfCards    
+    Methods:
+
+-Dealer 
+    Properties:
+        int SetScore
+        List<Card> Cards
+    Methods:
+
+-GameHub
+    Properties:
+        
+    Methods:
+
+-Game
+    Properties:
+        List<Player> Players
+
+    Methods:
