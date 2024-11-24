@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace BlackJack.Domain.Entities
 {
     public class Person
     {
+        public Guid Id { get; set; } = new();
         public List<Card> Cards { get; set; } = [];
         public int Score
         {
@@ -23,6 +19,7 @@ namespace BlackJack.Domain.Entities
                 return ScoreCalculation(true);
             }
         }
+        public bool IsStand { get; set; } = false;
         public bool HasNaturalBlackjack =>
         Cards.Count == 2
         && Score == 21

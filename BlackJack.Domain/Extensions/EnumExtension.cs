@@ -11,7 +11,8 @@ namespace BlackJack.Domain.Extensions
 
             try
             {
-                FieldInfo field = en.GetType()
+                FieldInfo field = en
+                    .GetType()
                     .GetField(en.ToString());
 
                 if (field == null)

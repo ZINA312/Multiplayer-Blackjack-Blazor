@@ -4,29 +4,38 @@ namespace BlackJack.Domain.Entities
 {
     public class Deck
     {
+        public Deck() { }
+        public Guid Id { get; set; } = new();
+        public Guid GameId { get; set; }
+        public required GameSession GameSession { get; set; } 
         protected Stack<Card> Cards { get; set; } = new Stack<Card>();
-        public Deck()
+        public static Deck Create(GameSession session)
         {
-            List<Card> cards = [];
-            //creating cards
-            foreach (CardSuit suit
-                     in (CardSuit[])Enum.GetValues(typeof(CardSuit)))
+            var deck = new Deck
             {
-                foreach (CardValue value
-                         in (CardValue[])Enum.GetValues(typeof(CardValue)))
+                GameSession = session,
+                GameId = session.GameId
+            };
+
+            List<Card> cards = [];
+
+            // Creating cards
+            foreach (CardSuit suit in (CardSuit[])Enum.GetValues(typeof(CardSuit)))
+            {
+                foreach (CardValue value in (CardValue[])Enum.GetValues(typeof(CardValue)))
                 {
                     Card newCard = new()
                     {
                         Suit = suit,
                         Value = value,
-                        ImageName = "card" + suit.GetDisplayName()
-                                    + value.GetDisplayName()
+                        ImageName = "card" + suit.GetDisplayName() + value.GetDisplayName()
                     };
 
                     cards.Add(newCard);
                 }
             }
-            //shuffle 
+
+            // Shuffle
             var array = cards.ToArray();
             Random rnd = new();
 
@@ -36,10 +45,12 @@ namespace BlackJack.Domain.Entities
                 (array[k], array[n]) = (array[n], array[k]);
             }
 
-            for (int n = 0; n < array.Count(); n++)
+            foreach (var card in array)
             {
-                Cards.Push(array[n]);
+                deck.Cards.Push(card);
             }
+
+            return deck;
         }
         public int Count
         {
