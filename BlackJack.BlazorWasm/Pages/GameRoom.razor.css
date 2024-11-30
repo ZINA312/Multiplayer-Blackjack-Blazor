@@ -1,0 +1,11 @@
+﻿body {
+}
+.game-room {
+    padding: 0;
+    margin: 0;
+    z-index: 0;
+    background-image: "/GameRoom/gameRoom.jpg";
+}
+.dealer {
+    font-size: 40px;
+}

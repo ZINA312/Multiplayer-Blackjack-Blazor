@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.BlazorWasm", "BlackJack.BlazorWasm\BlackJack.BlazorWasm.csproj", "{3CD7C46E-3199-41E8-B0E9-34A7098D035B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.BlazorWasm", "BlackJack.BlazorWasm\BlackJack.BlazorWasm.csproj", "{3CD7C46E-3199-41E8-B0E9-34A7098D035B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.API", "BlackJack.API\BlackJack.API.csproj", "{DA3C470D-0602-4235-9ED6-E3DD7F09A769}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.API", "BlackJack.API\BlackJack.API.csproj", "{DA3C470D-0602-4235-9ED6-E3DD7F09A769}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.Domain", "BlackJack.Domain\BlackJack.Domain.csproj", "{A7E390D6-CBB4-4BAF-AC39-4B1B16B41DAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.Domain", "BlackJack.Domain\BlackJack.Domain.csproj", "{A7E390D6-CBB4-4BAF-AC39-4B1B16B41DAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
