@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using BlackJack.Domain.Entities;
-using BlackJack.Domain.Extensions;
 
 namespace BlackJack.API.Data
 {

@@ -1,5 +1,4 @@
-﻿using BlackJack.API.Services.GameService;
-using BlackJack.API.Services.GameSessionService;
+﻿using BlackJack.API.Services.GameSessionService;
 using BlackJack.Domain.Entities;
 using BlackJack.Domain.Models;
 using Microsoft.AspNetCore.Authorization;

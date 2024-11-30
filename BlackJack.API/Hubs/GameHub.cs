@@ -2,7 +2,6 @@
 using BlackJack.API.Models;
 using BlackJack.Domain.Entities;
 using BlackJack.Domain.Models;
-using Microsoft.EntityFrameworkCore;
 using BlackJack.API.Services.GameService;
 using BlackJack.API.Services.GameSessionService;
 
@@ -23,17 +22,18 @@ namespace BlackJack.API.Hubs
             var gameSession = await _gameSessionService.GetGameSessionByNameAsync(gameName);
             if (gameSession.Successfull)
             {
-                await Clients.Caller.ReceiveNotification("Game already exists. Please join the game.");
+                await Clients.Caller.ActionFailed("Game already exists. Please join the game.");
                 return;
             }
 
-            await Clients.Caller.ReceiveNotification("Creating the game...");
+            
             var newGameSession = await _gameSessionService.CreateGameSessionAsync(gameName);
             if (!newGameSession.Successfull)
             {
-                await Clients.Caller.ReceiveNotification("Error on creating the game!");
+                await Clients.Caller.ActionFailed("Error on creating the game!");
                 return;
             }
+            await Clients.Caller.ReceiveNotification("Game created successfully!");
         }
 
         public async Task JoinGame(UserConnection connection, string? playerName)
@@ -46,9 +46,10 @@ namespace BlackJack.API.Hubs
             }
 
             await Groups.AddToGroupAsync(Context.ConnectionId, connection.gameId.ToString());
-            await _gameSessionService.AddPlayerToGameSessionAsync(playerName, connection.gameId);
+            var response = await _gameSessionService.AddPlayerToGameSessionAsync(playerName, connection.gameId);
             await Clients.Group(connection.gameId.ToString())
-                .ReceiveNotification($"Player {connection.userId} joined the game.");
+                .ReceiveNotification($"Player {(playerName != null ? playerName : connection.userId)} joined the game.");
+            await Clients.Group(connection.gameId.ToString()).JoinGame(response.Data);
         }
 
         public async Task LeaveGame(UserConnection connection)
@@ -113,7 +114,7 @@ namespace BlackJack.API.Hubs
                     {
                         await Clients.Group(gameId.ToString()).ActionFailed("Action failed!");
                         break;
-                    }
+                    } 
                     await Clients.Group(gameId.ToString()).PlayerStood(playerId, newResponse.Data);
                     break;
 

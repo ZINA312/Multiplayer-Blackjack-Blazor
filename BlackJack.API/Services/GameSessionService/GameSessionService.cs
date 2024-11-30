@@ -1,6 +1,5 @@
 ﻿using BlackJack.API.Data;
 using BlackJack.API.Hubs;
-using BlackJack.API.Models;
 using BlackJack.Domain.Entities;
 using BlackJack.Domain.Models;
 using Microsoft.AspNetCore.SignalR;
@@ -79,12 +78,12 @@ namespace BlackJack.API.Services.GameSessionService
             return ResponseData<GameSession>.Success(gameSession);
         }
 
-        public async Task<ResponseData<bool>> AddPlayerToGameSessionAsync(string name, Guid gameId)
+        public async Task<ResponseData<GameSession>> AddPlayerToGameSessionAsync(string name, Guid gameId)
         {
             var gameSession = await _context.game.FindAsync(gameId);
             if (gameSession == null)
             {
-                return ResponseData<bool>.Error("Game session not found!");
+                return ResponseData<GameSession>.Error("Game session not found!");
             }
 
             var player = new Player { Name = name, GameId = gameId, GameSession = gameSession };
@@ -92,7 +91,7 @@ namespace BlackJack.API.Services.GameSessionService
             _context.game.Update(gameSession);
             await _context.SaveChangesAsync();
 
-            return ResponseData<bool>.Success(true);
+            return ResponseData<GameSession>.Success(gameSession);
         }
 
         public async Task<ResponseData<bool>> DeletePlayerFromGameSessionAsync(Guid gameId, Guid playerId)
