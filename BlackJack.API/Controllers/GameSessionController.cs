@@ -8,6 +8,7 @@ namespace BlackJack.API.Controllers
 {
     [Route("api/")]
     [ApiController]
+    [AllowAnonymous]
     public class GameSessionController : ControllerBase
     {
         private readonly IGameSessionService _gameSessionService;
