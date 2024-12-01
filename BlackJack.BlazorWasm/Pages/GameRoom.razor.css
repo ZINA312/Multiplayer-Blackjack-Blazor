@@ -1,12 +1,32 @@
 ﻿body {
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
+h1 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    z-index: 10;
+}
+
 .game-room {
-    min-width: auto;
     min-height: 100vh;
-    background: url("/Hub/gameRoomBackground.jpg");
+    background: url("/Hub/gameRoomBackground.jpg") no-repeat center center fixed;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
 }
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .dealer {
     width: 100px;
     height: 100px;
@@ -14,23 +34,28 @@
     align-content: center;
     font-size: 40px;
     color: white;
-    position: fixed;
-    top: 20%;
-    left: 50%;
     border: 1px solid white;
-    transform: translate(-50%, -50%);
     background-color: grey;
     box-shadow: 0 0 10px grey;
+    margin-top: -80px; /* Adjust this value to raise the dealer */
 }
+
+.players-container {
+    margin-top: 130%;
+    display: flex;
+    justify-content: center;
+    gap: 40%; /* Space between players */
+}
+
 .player {
     width: 100px;
     height: 100px;
     text-align: center;
-    align-content: center;
     font-size: 40px;
     color: white;
     border: 1px solid white;
-    transform: translate(-50%, -50%);
     background-color: grey;
     box-shadow: 0 0 10px grey;
+    align-content: center;
+    flex-shrink: 0;
 }
