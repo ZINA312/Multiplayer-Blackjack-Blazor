@@ -2,6 +2,7 @@
     margin: 0;
     font-family: Arial, sans-serif;
 }
+
 h1 {
     position: absolute;
     top: 20px;
@@ -27,35 +28,62 @@ h1 {
     align-items: center;
 }
 
+.dealer-container {
+    margin-top: -80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 80px; /* Space between cards and dealer name */
+}
+
+.card {
+    width: 50px; /* Adjust size of cards */
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 -12.5px; /* Space between cards */
+}
+
 .dealer {
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    align-content: center;
     font-size: 40px;
     color: white;
     border: 1px solid white;
     background-color: grey;
     box-shadow: 0 0 10px grey;
-    margin-top: -80px; /* Adjust this value to raise the dealer */
+    padding: 10px;
 }
 
 .players-container {
-    margin-top: 130%;
     display: flex;
     justify-content: center;
-    gap: 40%; /* Space between players */
+    margin-top: 20px; /* Adjust spacing above players */
+    gap: 100px; /* Space between players */
+}
+
+.player-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .player {
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    font-size: 40px;
+    font-size: 20px;
     color: white;
     border: 1px solid white;
     background-color: grey;
     box-shadow: 0 0 10px grey;
-    align-content: center;
-    flex-shrink: 0;
+    padding: 10px;
+}
+
+.player-score {
+    font-size: 16px;
+    color: white;
+    margin: 5px 0; /* Space between score and player name */
+}
+
+.player-container .cards {
+    margin-bottom: 5px; /* Space between cards and score */
 }
