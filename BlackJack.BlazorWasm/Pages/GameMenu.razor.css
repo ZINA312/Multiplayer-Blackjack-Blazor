@@ -1,0 +1,70 @@
+﻿body {
+    margin: 0;
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    height: 100vh;
+    background: url("/Hub/gameHubBackground.jpg") no-repeat center center fixed;
+    background-size: cover;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 50px;
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between; /* Распределяет элементы по линии */
+    width: 100%; /* Убедитесь, что контейнер занимает всю ширину */
+    gap: 40%; /* Пробел между элементами */
+}
+
+.room-list {
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+}
+
+.room-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    flex-shrink: 0;
+    gap: 10px;
+    padding: 15px;
+    background: linear-gradient(to bottom, grey, black);
+    border: 2px solid white;
+    border-radius: 5%;
+}
+
+    .room-container img {
+        width: 100%;
+        height: auto;
+    }
+
+.enter-btn {
+    min-width: 200px;
+    border: 5px groove white;
+    background: #5e5f5f;
+    text-align: center;
+    color: white;
+    padding: 7px;
+    border-radius: 5%;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 1.5em;
+}
+
+    .enter-btn:hover {
+        border: 5px ridge white;
+        background: black;
+    }
+
+.nav-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}

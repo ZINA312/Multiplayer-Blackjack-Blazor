@@ -1,6 +1,99 @@
-﻿@page "/menu"
-<h3>GameMenu</h3>
+﻿@page "/"
+<div class="menu-container">
+    <div class="input-container">
+        <EditForm Model="@name" OnSubmit="NameChange" style="width: 100%;">
+            <p>
+                <span style="background: white; border: 3px solid black;">Имя:</span><br>
+                <InputText id="name" @bind-Value="name" />
+                <button type="submit">Сохранить имя</button>
+            </p>
+        </EditForm>
+        <EditForm Model="@roomName" OnSubmit="CreateRoom" style="width: 100%;">
+            <p>
+                <span style="background: white; border: 3px solid black;">Название комнаты:</span><br>
+                <InputText id="roomName" @bind-Value="roomName" />
+                <button type="submit">Создать комнату</button>
+            </p>
+        </EditForm>
+    </div>
+
+    <div class="room-list">
+        @for (int i = 0; i < RoomsPerPage; i++)
+        {
+            int index = CurrentPage * RoomsPerPage + i; // Полный индекс
+
+            if (index >= rooms.Count)
+            {
+                <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
+            }
+            else
+            {
+                var room = rooms.ElementAt(index); // Получаем комнату по индексу
+                <div class="room-container">
+                    <img src="/Hub/roomIcon.png" alt="Иконка комнаты" />
+                    <p style="font-size: 20px; color: white;">@room.Key</p>
+                    <NavLink class="nav-link" href=@($"/room/{index}")>
+                        <div class="enter-btn">
+                            <span>Войти (@room.Value / 3)</span>
+                        </div>
+                    </NavLink>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="pagination">
+        <button @onclick="PreviousPage" disabled="@(!HasPreviousPage)">Предыдущая страница</button>
+        <button @onclick="NextPage" disabled="@(!HasNextPage)">Следующая страница</button>
+    </div>
+</div>
 
 @code {
+    private string name = "";
+    private string roomName = "";
+    private Dictionary<string, int> rooms = new Dictionary<string, int>
+    {
+        { "Комната 1", 1 },
+        { "Комната 2", 2 },
+        { "Комната 3", 3 },
+        { "Комната 4", 0 },
+        { "Комната 5", 1 },
+        { "Комната 6", 0 }
+    };
 
+    private int CurrentPage { get; set; } = 0;
+    private const int RoomsPerPage = 3;
+
+    private bool HasNextPage => (CurrentPage + 1) * RoomsPerPage < rooms.Count;
+    private bool HasPreviousPage => CurrentPage > 0;
+
+    private void NextPage()
+    {
+        if (HasNextPage)
+        {
+            CurrentPage++;
+        }
+    }
+
+    private void PreviousPage()
+    {
+        if (HasPreviousPage)
+        {
+            CurrentPage--;
+        }
+    }
+
+    void NameChange()
+    {
+        
+    }
+
+    void CreateRoom()
+    {
+        if (!string.IsNullOrWhiteSpace(roomName) && !rooms.ContainsKey(roomName))
+        {
+            rooms.Add(roomName, 0);
+            roomName = ""; // Очистить поле ввода после создания комнаты
+        }
+    }
 }

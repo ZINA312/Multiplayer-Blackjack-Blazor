@@ -1,11 +1,36 @@
 ﻿body {
 }
 .game-room {
-    padding: 0;
-    margin: 0;
-    z-index: 0;
-    background-image: "/GameRoom/gameRoom.jpg";
+    min-width: auto;
+    min-height: 100vh;
+    background: url("/Hub/gameRoomBackground.jpg");
+    background-size: cover;
+    box-sizing: border-box;
 }
 .dealer {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    align-content: center;
     font-size: 40px;
+    color: white;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    border: 1px solid white;
+    transform: translate(-50%, -50%);
+    background-color: grey;
+    box-shadow: 0 0 10px grey;
+}
+.player {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    align-content: center;
+    font-size: 40px;
+    color: white;
+    border: 1px solid white;
+    transform: translate(-50%, -50%);
+    background-color: grey;
+    box-shadow: 0 0 10px grey;
 }

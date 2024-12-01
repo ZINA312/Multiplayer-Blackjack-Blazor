@@ -1,11 +1,28 @@
 ﻿@page "/room"
+@page "/room/{RoomId:int}"
 <div class="game-room">
-    
-</div>
-<div class="dealer">
-    D
+    <h1>Комната @RoomId</h1>
+    <div class="dealer">
+        D
+    </div>
+    <div class="player">
+        P
+    </div>
+    <div class="player">
+        P
+    </div>
+    <div class="player">
+        P
+    </div>
 </div>
 
 @code {
+    [Parameter]
+    public int RoomId { get; set; } = 0;
+    private int roomId;
 
+    protected override void OnParametersSet()
+    {
+        roomId = RoomId;
+    }
 }
