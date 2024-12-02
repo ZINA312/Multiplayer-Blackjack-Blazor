@@ -18,8 +18,8 @@ namespace BlackJack.API.Controllers
         }
 
         [HttpGet("games")]
-        [Authorize]
-        public async Task<ActionResult<ResponseData<ListModel<GameSession>>>> GetGames(int pageNo = 1,
+        [AllowAnonymous]
+        public async Task<ActionResult<ResponseData<List<GameSession>>>> GetGames(int pageNo = 1,
                                                                                       int pageSize = 3)
         {
             return Ok(await _gameSessionService.GetGameSessionsListAsync(pageNo, pageSize));

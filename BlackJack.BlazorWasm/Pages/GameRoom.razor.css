@@ -1,36 +1,113 @@
 ﻿body {
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
+
+h1 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    z-index: 10;
+}
+
 .game-room {
-    min-width: auto;
     min-height: 100vh;
-    background: url("/Hub/gameRoomBackground.jpg");
+    background: url("/Hub/gameRoomBackground.jpg") no-repeat center center fixed;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
 }
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dealer-container {
+    margin-top: -80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 80px; /* Space between cards and dealer name */
+}
+
+.card {
+    width: 50px; /* Adjust size of cards */
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 -12.5px; /* Space between cards */
+}
+
 .dealer {
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    align-content: center;
     font-size: 40px;
     color: white;
-    position: fixed;
-    top: 20%;
-    left: 50%;
     border: 1px solid white;
-    transform: translate(-50%, -50%);
     background-color: grey;
     box-shadow: 0 0 10px grey;
+    padding: 10px;
 }
+
+.players-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjust spacing above players */
+    gap: 100px; /* Space between players */
+}
+
+.player-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .player {
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    align-content: center;
-    font-size: 40px;
+    font-size: 20px;
     color: white;
     border: 1px solid white;
-    transform: translate(-50%, -50%);
     background-color: grey;
     box-shadow: 0 0 10px grey;
+    padding: 10px;
 }
+
+.player-score {
+    font-size: 16px;
+    color: white;
+    margin: 5px 0; /* Space between score and player name */
+}
+
+.player-container .cards {
+    margin-bottom: 5px; /* Space between cards and score */
+}
+.button-container {
+    position: absolute;
+    bottom: 10%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Space above buttons */
+    gap: 60px; /* Space between buttons */
+}
+
+.action-button {
+    padding: 10px 20px;
+    font-size: 20px;
+    color: white;
+    background-color: #007BFF; /* Button color */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    transition: background-color 0.3s;
+}
+
+    .action-button:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+    }

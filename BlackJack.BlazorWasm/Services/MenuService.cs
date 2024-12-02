@@ -2,6 +2,7 @@
 using BlackJack.Domain.Models;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.Data.SqlTypes;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace BlackJack.BlazorWasm.Services;
@@ -67,14 +68,13 @@ public class MenuService : IMenuService
         var url = $"api/games?pageNo={pageNo}&pageSize={pageSize}";
 
         var response = await _httpClient.GetAsync(url);
-
         if (response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
-
-            return JsonSerializer.Deserialize<ResponseData<ListModel<GameSession>>>(content, new JsonSerializerOptions
+            Console.WriteLine(content);
+            return await response.Content.ReadFromJsonAsync<ResponseData<ListModel<GameSession>>>(new JsonSerializerOptions
             {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр свойств
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
         }
         else

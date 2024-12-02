@@ -1,7 +1,7 @@
 ﻿@using BlackJack.BlazorWasm.Services
 @using BlackJack.Domain.Entities
 @using BlackJack.Domain.Models
-@inject MenuService MenuService
+@inject IMenuService MenuService
 @page "/"
 
 
@@ -24,7 +24,7 @@
     </div>
 
     <div class="room-list">
-         @for (int i = 0; i < RoomsPerPage; i++)
+         @* @for (int i = 0; i < RoomsPerPage; i++)
          {
              int index = CurrentPage * RoomsPerPage + i; // Полный индекс
 
@@ -45,9 +45,9 @@
                      </NavLink>
                  </div>
              }
-         }
+         } *@
         
-        @* @if (games == null)
+        @if (games == null)
         {
             <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
             <p> No games</p>
@@ -67,7 +67,7 @@
                 
             }
             
-        } *@
+        }
     </div>
 
     <div class="pagination">
@@ -78,20 +78,20 @@
 
 @code {
 
-    // private ListModel<GameSession>? games;
+    private ListModel<GameSession>? games;
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     try
-    //     {
-    //         var response = await MenuService.GetGameSessionsList();
-    //         games = response.Data;
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine($"Ошибка при загрузке игр: {ex.Message}");
-    //     }
-    // }
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var response = await MenuService.GetGameSessionsList();
+            games = response.Data;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при загрузке игр: {ex.Message}");
+        }
+    }
 
     private string name = "";
     private string roomName = "";
@@ -129,15 +129,20 @@
 
     void NameChange()
     {
-        
+
     }
 
     void CreateRoom()
     {
-        if (!string.IsNullOrWhiteSpace(roomName) && !rooms.ContainsKey(roomName))
+        Console.WriteLine(roomName);
+        if (!string.IsNullOrWhiteSpace(roomName))
         {
-            rooms.Add(roomName, 0);
-            roomName = ""; // Очистить поле ввода после создания комнаты
+            MenuService.CreateGame(roomName);
         }
+        else
+        {
+            MenuService.CreateGame(null);
+        }
+        roomName = ""; // Очистить поле ввода после создания комнаты
     }
 }

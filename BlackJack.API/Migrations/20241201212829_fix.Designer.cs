@@ -3,6 +3,7 @@ using System;
 using BlackJack.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlackJack.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241201212829_fix")]
+    partial class fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,10 +61,10 @@ namespace BlackJack.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CardDeckId")
+                    b.Property<Guid?>("CardDeckId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("GameId")
+                    b.Property<Guid>("GameId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("IsStand")
@@ -103,6 +106,12 @@ namespace BlackJack.API.Migrations
                     b.Property<int>("CurrentPlayerIndex")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("DealerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("DeckId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -111,6 +120,10 @@ namespace BlackJack.API.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("GameId");
+
+                    b.HasIndex("DealerId");
+
+                    b.HasIndex("DeckId");
 
                     b.ToTable("game");
                 });
@@ -153,14 +166,13 @@ namespace BlackJack.API.Migrations
                 {
                     b.HasOne("BlackJack.Domain.Entities.Deck", "CardDeck")
                         .WithMany()
-                        .HasForeignKey("CardDeckId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CardDeckId");
 
                     b.HasOne("BlackJack.Domain.Entities.GameSession", "GameSession")
-                        .WithOne("Dealer")
+                        .WithOne()
                         .HasForeignKey("BlackJack.Domain.Entities.Dealer", "GameId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CardDeck");
 
@@ -170,11 +182,30 @@ namespace BlackJack.API.Migrations
             modelBuilder.Entity("BlackJack.Domain.Entities.Deck", b =>
                 {
                     b.HasOne("BlackJack.Domain.Entities.GameSession", "GameSession")
-                        .WithOne("Deck")
+                        .WithOne()
                         .HasForeignKey("BlackJack.Domain.Entities.Deck", "GameId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("GameSession");
+                });
+
+            modelBuilder.Entity("BlackJack.Domain.Entities.GameSession", b =>
+                {
+                    b.HasOne("BlackJack.Domain.Entities.Dealer", "Dealer")
+                        .WithMany()
+                        .HasForeignKey("DealerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlackJack.Domain.Entities.Deck", "Deck")
+                        .WithMany()
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dealer");
+
+                    b.Navigation("Deck");
                 });
 
             modelBuilder.Entity("BlackJack.Domain.Entities.Player", b =>
@@ -195,12 +226,6 @@ namespace BlackJack.API.Migrations
 
             modelBuilder.Entity("BlackJack.Domain.Entities.GameSession", b =>
                 {
-                    b.Navigation("Dealer")
-                        .IsRequired();
-
-                    b.Navigation("Deck")
-                        .IsRequired();
-
                     b.Navigation("Players");
                 });
 
