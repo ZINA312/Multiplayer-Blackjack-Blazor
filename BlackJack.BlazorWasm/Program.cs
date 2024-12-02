@@ -1,6 +1,5 @@
 using BlackJack.BlazorWasm;
 using BlackJack.BlazorWasm.Services;
-
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 

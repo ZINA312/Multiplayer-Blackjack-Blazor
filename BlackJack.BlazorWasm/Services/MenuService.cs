@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace BlackJack.BlazorWasm.Services;
 
-public class MenuService:IMenuService
+public class MenuService : IMenuService
 {
     private readonly HttpClient _httpClient;
 
@@ -15,7 +15,7 @@ public class MenuService:IMenuService
         _httpClient = httpClient;
     }
 
-    public async Task<bool> CreateGame(string gameName )
+    public async Task<bool> CreateGame(string gameName)
     {
         var connection = new HubConnectionBuilder()
             .WithUrl("https://localhost:7052/game")
@@ -25,7 +25,7 @@ public class MenuService:IMenuService
         try
         {
             await connection.StartAsync();
-            await connection.InvokeAsync("CreateGame",  gameName );
+            await connection.InvokeAsync("CreateGame", gameName);
 
             Console.WriteLine($"{connection}");
         }
