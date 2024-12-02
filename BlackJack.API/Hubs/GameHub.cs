@@ -79,9 +79,9 @@ namespace BlackJack.API.Hubs
             await Clients.Group(gameId.ToString()).GameStarted("The game has started!", gameSession);
         }
 
-        public async Task PlayerAction(Guid gameId, Guid playerId, string action)
+        public async Task PlayerAction(UserConnection connection, string action)
         {
-            var response = await _gameSessionService.GetGameSessionByIdAsync(gameId);
+            var response = await _gameSessionService.GetGameSessionByIdAsync(connection.gameId);
            
             if (response.Successfull == false)
             {
@@ -89,7 +89,7 @@ namespace BlackJack.API.Hubs
                 return;
             }
             var gameSession = response.Data;
-            var player = gameSession.Players.First(p => p.Id == playerId);
+            var player = gameSession.Players.First(p => p.Id == connection.userId);
             if (player == null)
             {
                 await Clients.Caller.ActionFailed("Player not found.");
@@ -99,23 +99,23 @@ namespace BlackJack.API.Hubs
             switch (action.ToLower())
             {
                 case "hit":
-                    newResponse = await _gameService.PlayerHit(gameId, playerId);
+                    newResponse = await _gameService.PlayerHit(connection.gameId, connection.userId);
                     if (newResponse.Successfull == false)
                     {
-                        await Clients.Group(gameId.ToString()).ActionFailed("Action failed!");
+                        await Clients.Group(connection.gameId.ToString()).ActionFailed("Action failed!");
                         break;
                     }
-                    await Clients.Group(gameId.ToString()).PlayerHit(playerId, newResponse.Data);
+                    await Clients.Group(connection.gameId.ToString()).PlayerHit(connection.userId, newResponse.Data);
                     break;
 
                 case "stand":
-                    newResponse = await _gameService.PlayerStand(gameId, playerId);
+                    newResponse = await _gameService.PlayerStand(connection.gameId, connection.userId);
                     if (newResponse.Successfull == false)
                     {
-                        await Clients.Group(gameId.ToString()).ActionFailed("Action failed!");
+                        await Clients.Group(connection.gameId.ToString()).ActionFailed("Action failed!");
                         break;
                     } 
-                    await Clients.Group(gameId.ToString()).PlayerStood(playerId, newResponse.Data);
+                    await Clients.Group(connection.gameId.ToString()).PlayerStood(connection.userId, newResponse.Data);
                     break;
 
                 default:

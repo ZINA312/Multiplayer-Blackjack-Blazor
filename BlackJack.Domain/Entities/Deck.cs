@@ -1,14 +1,30 @@
-﻿using BlackJack.Domain.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using System.Linq;
+using BlackJack.Domain.Extensions;
 
 namespace BlackJack.Domain.Entities
 {
     public class Deck
     {
         public Deck() { }
+
+        [JsonPropertyName("id")]
         public Guid Id { get; set; } = new();
-        public Guid GameId { get; set; }
-        public required GameSession GameSession { get; set; } 
+
+        [JsonPropertyName("gameId")]
+        public Guid? GameId { get; set; }
+
+        [JsonIgnore]
+        public GameSession GameSession { get; set; }
+
+        [JsonIgnore]
+        public int Count { get { return Cards.Count; }
+        }
+
         protected Stack<Card> Cards { get; set; } = new Stack<Card>();
+
         public static Deck Create(GameSession session)
         {
             var deck = new Deck
@@ -17,12 +33,12 @@ namespace BlackJack.Domain.Entities
                 GameId = session.GameId
             };
 
-            List<Card> cards = [];
+            List<Card> cards = new List<Card>();
 
             // Creating cards
-            foreach (CardSuit suit in (CardSuit[])Enum.GetValues(typeof(CardSuit)))
+            foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit)))
             {
-                foreach (CardValue value in (CardValue[])Enum.GetValues(typeof(CardValue)))
+                foreach (CardValue value in Enum.GetValues(typeof(CardValue)))
                 {
                     Card newCard = new()
                     {
@@ -52,17 +68,12 @@ namespace BlackJack.Domain.Entities
 
             return deck;
         }
-        public int Count
-        {
-            get
-            {
-                return Cards.Count;
-            }
-        }
+
         public void Add(Card card)
         {
             Cards.Push(card);
         }
+
         public Card Draw()
         {
             return Cards.Pop();

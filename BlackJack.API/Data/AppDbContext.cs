@@ -28,13 +28,13 @@ namespace BlackJack.API.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<GameSession>()
-                .HasOne<Deck>()
+                .HasOne(gs => gs.Deck)
                 .WithOne(d => d.GameSession)
                 .HasForeignKey<Deck>(d => d.GameId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<GameSession>()
-                .HasOne<Dealer>()
+                .HasOne(gs => gs.Dealer)
                 .WithOne(d => d.GameSession)
                 .HasForeignKey<Dealer>(d => d.GameId)
                 .OnDelete(DeleteBehavior.Cascade);

@@ -17,7 +17,7 @@ namespace BlackJack.API.Services.GameSessionService
             _context = dbContext;
         }
 
-        public async Task<ResponseData<ListModel<GameSession>>> GetGameSessionsListAsync(int pageNo = 1, int pageSize = 10)
+        public async Task<ResponseData<ListModel<GameSession>>> GetGameSessionsListAsync(int pageNo = 1, int pageSize = 3)
         {
             if (pageSize > _maxPageSize)
             {
@@ -28,9 +28,10 @@ namespace BlackJack.API.Services.GameSessionService
             var query = _context.game.AsQueryable();
             var totalCount = await query.CountAsync();
 
-            dataList.Items = [.. query.OrderBy(d => d.GameId)
+            dataList.Items = query.OrderBy(d => d.GameId)
                                     .Skip((pageNo - 1) * pageSize)
-                                    .Take(pageSize)];
+                                    .Take(pageSize)
+                                    .ToList();
             dataList.TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
             if (pageNo > dataList.TotalPages)
             {
@@ -54,7 +55,7 @@ namespace BlackJack.API.Services.GameSessionService
         public async Task<ResponseData<GameSession>> GetGameSessionByNameAsync(string gameName)
         {
             var response = new ResponseData<GameSession>();
-            var gameSession = await _context.game.FirstAsync(g => g.Name == gameName);
+            var gameSession = await _context.game.FirstOrDefaultAsync(g => g.Name == gameName);
             if (gameSession == null)
             {
                 return ResponseData<GameSession>.Error("Game session not found!");

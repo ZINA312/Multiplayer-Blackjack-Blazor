@@ -1,22 +1,39 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
 namespace BlackJack.Domain.Entities
 {
     public class Dealer : Person
     {
-        public Guid GameId { get; set; }
+        [JsonPropertyName("gameId")]
+        public Guid? GameId { get; set; }
+
+        [JsonIgnore]
         public GameSession GameSession { get; set; }
+
+        [JsonPropertyName("cardDeck")]
         public Deck CardDeck { get; set; }
+
+        public Dealer() { }
+
+
         public static Dealer Create(GameSession session)
         {
-            var dealer = new Dealer();
-            dealer.GameSession = session;
-            dealer.GameId = session.GameId;
+            var dealer = new Dealer
+            {
+                GameSession = session,
+                GameId = session.GameId
+            };
             return dealer;
         }
+
         public Card Deal()
         {
             return CardDeck.Draw();
         }
+
         public async Task DealToSelf(bool isVisible)
         {
             Card card = Deal();

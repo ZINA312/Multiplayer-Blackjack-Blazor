@@ -1,4 +1,6 @@
 ﻿
+using System.Text.Json.Serialization;
+
 namespace BlackJack.Domain.Entities
 {
     public class GameSession
@@ -17,6 +19,7 @@ namespace BlackJack.Domain.Entities
             Deck = Deck.Create(this);
             Dealer.CardDeck = Deck;
         }
+
 
         public void NextPlayer()
         {
