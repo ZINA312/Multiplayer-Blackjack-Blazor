@@ -9,7 +9,7 @@ using BlackJack.API.Models;
 
 namespace BlackJack.BlazorWasm.Services;
 
-public class MenuService:IMenuService
+public class MenuService : IMenuService
 {
     private readonly HttpClient _httpClient;
     private Player player; 
@@ -30,7 +30,7 @@ public class MenuService:IMenuService
         try
         {
             await connection.StartAsync();
-            await connection.InvokeAsync("CreateGame",  gameName );
+            await connection.InvokeAsync("CreateGame", gameName);
 
             Console.WriteLine($"{connection}");
         }

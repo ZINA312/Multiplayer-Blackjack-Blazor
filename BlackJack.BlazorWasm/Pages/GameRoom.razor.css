@@ -87,3 +87,27 @@ h1 {
 .player-container .cards {
     margin-bottom: 5px; /* Space between cards and score */
 }
+.button-container {
+    position: absolute;
+    bottom: 10%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Space above buttons */
+    gap: 60px; /* Space between buttons */
+}
+
+.action-button {
+    padding: 10px 20px;
+    font-size: 20px;
+    color: white;
+    background-color: #007BFF; /* Button color */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    transition: background-color 0.3s;
+}
+
+    .action-button:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+    }
