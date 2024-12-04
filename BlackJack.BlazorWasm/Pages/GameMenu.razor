@@ -50,24 +50,33 @@
         @* @if (games == null)
         {
             <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
-            <p> No games</p>
+            <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
+            <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
         }
         else
-        {
-            
+        {     
             @foreach (var game in games.Items)
             {
-                
-                    
-                    <div class="room-container">
-                        <img src="/Hub/roomIcon.png" alt="Иконка комнаты" />
-                        <p style="font-size: 20px; color: white;">@game.Name</p>
-                        
-                    </div>
+
+
+                <div class="room-container">
+                    <img src="/Hub/roomIcon.png" alt="Иконка комнаты" />
+                    <p style="font-size: 20px; color: white;">@game.Name</p>
+                    <NavLink class="nav-link" href=@($"/room/{game.GameId}")>
+                        <div class="enter-btn">
+                            <span>Войти (@game.Players.Count / 3)</span>
+                        </div>
+                    </NavLink>
+                </div>
                 
             }
-            
-        } *@
+            @for (int i = 0; i < 3 - games.Items.Count; ++ i)
+            {
+                <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
+            }
+
+
+        }
     </div>
 
     <div class="pagination">
@@ -141,7 +150,7 @@
         }
         else
         {
-            MenuService.CreateGame(null);
+            
         }
         roomName = ""; // Очистить поле ввода после создания комнаты
     }
