@@ -24,59 +24,50 @@
     </div>
 
     <div class="room-list">
-         @for (int i = 0; i < RoomsPerPage; i++)
-         {
-             int index = CurrentPage * RoomsPerPage + i; // Полный индекс
-
-             if (index >= games.Items.Count)
-             {
-                 <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
-             }
-             else
-             {
-                 var room = games.Items.ElementAt(index); // Получаем комнату по индексу
-                 <div class="room-container">
-                     <img src="/Hub/roomIcon.png" alt="Иконка комнаты" />
-                     <p style="font-size: 20px; color: white;">@room.Name</p>
-                     <NavLink  onclick="JoinGame" class="nav-link" href=@($"/room/{index}")>
-                         <div class="enter-btn">
-                             <span>Войти </span>
-                         </div>
-                     </NavLink>
-                 </div>
-             }
-         }
-        
-        @* @if (games == null)
+        @for (int i = 0; i < RoomsPerPage; i++)
         {
-            <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
-            <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
-            <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
-        }
-        else
-        {     
-            @foreach (var game in games.Items)
-            {
+            int index = CurrentPage * RoomsPerPage + i; // Полный индекс
 
-
-                <div class="room-container">
-                    <img src="/Hub/roomIcon.png" alt="Иконка комнаты" />
-                    <p style="font-size: 20px; color: white;">@game.Name</p>
-                    <NavLink class="nav-link" href=@($"/room/{game.GameId}")>
-                        <div class="enter-btn">
-                            <span>Войти (@game.Players.Count / 3)</span>
-                        </div>
-                    </NavLink>
-                </div>
-                
-            }
-            @for (int i = 0; i < 3 - games.Items.Count; ++ i)
+            if (index >= games.Items.Count)
             {
                 <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
             }
+            else
+            {
+                var room = games.Items.ElementAt(index); // Получаем комнату по индексу
+                <div class="room-container">
+                    <img src="/Hub/roomIcon.png" alt="Иконка комнаты" />
+                    <p style="font-size: 20px; color: white;">@room.Name</p>
+                    <NavLink onclick="JoinGame" class="nav-link" href=@($"/room/{index}")>
+                        <div class="enter-btn">
+                            <span>Войти </span>
+                        </div>
+                    </NavLink>
+                </div>
+            }
+        }
 
+        @* @if (games == null)
+        {
+        <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
+        <p> No games</p>
+        }
+        else
+        {
+
+        @foreach (var game in games.Items)
+        {
+
+
+        <div class="room-container">
+        <img src="/Hub/roomIcon.png" alt="Иконка комнаты" />
+        <p style="font-size: 20px; color: white;">@game.Name</p>
+
+        </div>
 
         }
+
+        } *@
     </div>
 
     <div class="pagination">
@@ -150,13 +141,13 @@
         }
         else
         {
-            
+            MenuService.CreateGame(null);
         }
         roomName = ""; // Очистить поле ввода после создания комнаты
     }
 
     void JoinGame()
     {
-        
+
     }
 }
