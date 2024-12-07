@@ -1,4 +1,4 @@
-﻿using BlackJack.API.Models;
+﻿using BlackJack.Domain.Models;
 using BlackJack.Domain.Entities;
 using Microsoft.AspNetCore.SignalR.Client;
 

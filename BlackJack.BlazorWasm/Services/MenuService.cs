@@ -3,9 +3,7 @@ using BlackJack.Domain.Models;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.Data.SqlTypes;
 using System.Net.Http.Json;
-using BlackJack.Domain.Models;
 using System.Text.Json;
-using BlackJack.API.Models;
 
 namespace BlackJack.BlazorWasm.Services;
 
@@ -88,5 +86,4 @@ public class MenuService : IMenuService
             throw new HttpRequestException($"Не удалось получить список игр. Код ответа: {response.StatusCode}");
         }
     }
-
 }

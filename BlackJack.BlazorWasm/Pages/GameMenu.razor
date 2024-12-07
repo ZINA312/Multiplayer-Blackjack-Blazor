@@ -24,7 +24,7 @@
     </div>
 
     <div class="room-list">
-        @for (int i = 0; i < RoomsPerPage; i++)
+        @*@for (int i = 0; i < RoomsPerPage; i++)
         {
             int index = CurrentPage * RoomsPerPage + i; // Полный индекс
 
@@ -45,29 +45,28 @@
                     </NavLink>
                 </div>
             }
-        }
+        }*@
 
-        @* @if (games == null)
+        @if (games == null)
         {
-        <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
-        <p> No games</p>
+            <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
+            <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
+            <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
         }
         else
         {
-
-        @foreach (var game in games.Items)
-        {
-
-
-        <div class="room-container">
-        <img src="/Hub/roomIcon.png" alt="Иконка комнаты" />
-        <p style="font-size: 20px; color: white;">@game.Name</p>
-
-        </div>
-
+            @foreach (var game in games.Items)
+            {
+                <div class="room-container">
+                <img src="/Hub/roomIcon.png" alt="Иконка комнаты" />
+                <p style="font-size: 20px; color: white;">@game.Name</p>
+                </div>
+            }
+            for (int i = 0; i < 3 - games.Items.Count; ++i)
+            {
+                <div class="room-container empty-room"></div> <!-- Пустой квадрат -->
+            }
         }
-
-        } *@
     </div>
 
     <div class="pagination">
