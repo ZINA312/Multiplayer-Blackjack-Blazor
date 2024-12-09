@@ -22,9 +22,8 @@ builder.Services.AddControllers()
         .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-            options.JsonSerializerOptions.MaxDepth = 64; // optional, depending on your needs
-            options.JsonSerializerOptions.ReferenceHandler = null; // Уберите обработку ссылок
-            options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            options.JsonSerializerOptions.MaxDepth = 64;
+            options.JsonSerializerOptions.ReferenceHandler = null;
         });
 
 builder.Services.AddSignalR();

@@ -1,7 +1,7 @@
-﻿@page "/room"
-@page "/room/{RoomId:int}"
+﻿@page "/room/{GameId}"
+
 <div class="game-room">
-    <h1>Комната @RoomId</h1>
+    <h1>Комната @GameId</h1>
     <div class="table-container">
         <div class="dealer-container">
             <div class="dealer">Dealer</div>
@@ -51,11 +51,11 @@
 
 @code {
     [Parameter]
-    public int RoomId { get; set; } = 0;
-    private int roomId;
+    public string GameId { get; set; }
+    private Guid gameId;
 
     protected override void OnParametersSet()
     {
-        roomId = RoomId;
+        gameId = new Guid(GameId);
     }
 }

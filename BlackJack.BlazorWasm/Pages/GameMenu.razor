@@ -7,10 +7,10 @@
 
 <div class="menu-container">
     <div class="input-container">
-        <EditForm Model="@name" OnSubmit="NameChange" style="width: 100%;">
+        <EditForm Model="@playerName" OnSubmit="NameChange" style="width: 100%;">
             <p>
                 <span style="background: white; border: 3px solid black;">Имя:</span><br>
-                <InputText id="name" @bind-Value="name" />
+                <InputText id="playerName" @bind-Value="playerName" />
                 <button type="submit">Сохранить имя</button>
             </p>
         </EditForm>
@@ -35,11 +35,10 @@
         {
             @foreach (var game in games.Items)
             {
-                <p>@game.Name</p>
                 <div class="room-container">
                     <img src="/Hub/roomIcon.png" alt="Иконка комнаты" />
                     <p style="font-size: 20px; color: white;">@game.Name</p>
-                    <NavLink onclick="JoinGame" class="nav-link" href=@($"/room/{game.GameId}")>
+                    <NavLink @onclick="() => JoinGame(game.GameId)" class="nav-link" href=@($"/room/{game.GameId.ToString()}")>
                         <div class="enter-btn">
                             <span>Войти (@game.Players.Count/3)</span>
                         </div>
@@ -57,6 +56,7 @@
         <button @onclick="PreviousPage" disabled="@(!HasPreviousPage)">Предыдущая страница</button>
         <button @onclick="NextPage" disabled="@(!HasNextPage)">Следующая страница</button>
     </div>
+    <button @onclick="RefreshGames">Обновить список игр</button>
 </div>
 
 @code {
@@ -65,28 +65,29 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("Страница обновилась.");
+        await LoadGames();
+    }
+
+    private async Task LoadGames()
+    {
         try
         {
             var response = await MenuService.GetGameSessionsList();
             games = response.Data;
-            Console.WriteLine(response);
+            StateHasChanged(); // Обновление состояния компонента
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Ошибка при загрузке игр: {ex.Message}");
         }
-        if (games != null)
-        {
-            foreach (var game in games.Items)
-            {
-                Console.WriteLine(game.GameId);
-                Console.WriteLine(game.Name);
-            }
-        }
     }
 
-    private string name = "";
+    private async Task RefreshGames()
+    {
+        await LoadGames(); // Загрузка данных снова
+    }
+
+    private string playerName = "";
     private string roomName = "";
 
     private int CurrentPage { get; set; } = 0;
@@ -113,12 +114,11 @@
 
     void NameChange()
     {
-
+        
     }
 
     void CreateRoom()
     {
-        Console.WriteLine(roomName);
         if (!string.IsNullOrWhiteSpace(roomName))
         {
             MenuService.CreateGame(roomName);
@@ -130,8 +130,8 @@
         roomName = "";
     }
 
-    void JoinGame()
+    void JoinGame(Guid gameId)
     {
-
+        MenuService.JoinGame(playerName, gameId);
     }
 }

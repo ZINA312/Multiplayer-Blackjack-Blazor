@@ -46,6 +46,11 @@
         height: auto;
     }
 
+    .room-container p {
+        margin-top: 5px;
+        margin-bottom: -5px;
+    }
+
 .enter-btn {
     min-width: 200px;
     border: 5px groove white;

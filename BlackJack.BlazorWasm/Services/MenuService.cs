@@ -10,12 +10,12 @@ namespace BlackJack.BlazorWasm.Services;
 public class MenuService : IMenuService
 {
     private readonly HttpClient _httpClient;
-    private Player player; 
+    private Player player;
 
     public MenuService(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        
+
     }
 
     public async Task<bool> CreateGame(string gameName)
